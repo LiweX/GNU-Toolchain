@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "version.h"
+#include "cpuinfo.h"
+#include "meminfo.h"
 
 int main(int argc,char* argv[]){
     if(argc!=1){
@@ -10,7 +13,8 @@ int main(int argc,char* argv[]){
             if(jFlag){
                 printf("Show punto 1.1 stuff on JSON format\n");
             }else{
-                printf("Show punto 1.1 stuff\n"); 
+                meminfo();
+                cpuinfo();
             }
         }
 
@@ -18,7 +22,7 @@ int main(int argc,char* argv[]){
             if(jFlag){
                 printf("Show punto 1.2 stuff on JSON format\n");
             }else{
-                printf("Show punto 1.2 stuff\n"); 
+                version();
             } 
         }
 
