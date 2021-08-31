@@ -1,7 +1,10 @@
 CFLAGS=-Wall -Werror -pedantic
 
-lab3: lab3.o myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
-	gcc $(CFLAGS) -o lab3 myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o lab3.o
+lab3: lab3.o myStaticLib.a
+	gcc $(CFLAGS) -o lab3 lab3.o -L. myStaticLib.a
+
+myStaticLib.a: myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
+	ar rcs myStaticLib.a myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
 
 lab3.o: lab3.c
 	gcc $(CFLAGS) -c lab3.c

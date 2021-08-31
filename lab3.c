@@ -1,36 +1,45 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "version.h"
 #include "cpuinfo.h"
 #include "meminfo.h"
 
 int main(int argc,char* argv[]){
-    if(argc!=1){
-        int jFlag=0;
-        if(argc>2) jFlag=1;
-        if(strstr(argv[1],"-s")){
-            if(jFlag){
-                meminfo(1);
-                cpuinfo(1);
-            }else{
-                meminfo(0);
-                cpuinfo(0);
-            }
-        }
 
-        if(strstr(argv[1],"-a")){
-            if(jFlag){
-                printf("Show punto 1.2 stuff on JSON format\n");
-            }else{
-                version();
-            } 
+    int opt;
+    int jFlag=0;
+    int sFlag=0;
+    int aFlag=0;
+    int dFlag=0;
+    if(argc<2) printf("Lista de argumentos validos:\n-s\n-a\n-s -j\n-a -j\n-d\n");
+    while ((opt = getopt(argc,argv,"jsad")) != -1)
+    {
+        switch (opt)
+        {
+        case 'j': 
+            jFlag=1;
+            break;
+        case 's':          
+            sFlag=1;
+            break;
+        case 'a':
+            aFlag=1;
+            break;
+        case 'd':
+            dFlag=1;
+            break;
+        default:
+            printf("Lista de argumentos validos:\n-s\n-a\n-s -j\n-a -j\n-d\n");
+            exit(EXIT_FAILURE);
         }
-
-        if(strstr(argv[1],"-d")){
-            printf("Show punto 3 stuff\n");
-        }
-    }else{
-        printf("Lista de argumentos validos:\n-s\n-a\n-s -j\n-a -j\n-d\n");
     }
+    if(sFlag){
+        meminfo(jFlag);
+        cpuinfo(jFlag);
+    }
+    if(aFlag) version(jFlag);
+    if(dFlag) printf("cuestiones del punto 3");
+    exit(EXIT_SUCCESS);
 }

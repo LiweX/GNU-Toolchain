@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "myFuncs.h"
+#include "cJSON.h"
 
-void version(void){
+void version(int json){
 
     FILE* file = openFile("/proc/version");
     char buffer[300];
@@ -22,8 +23,23 @@ void version(void){
         i++; //se incrementa la cuenta de la cantidad de palabras
         token=strtok(NULL," "); //se toma la direccion de memoria de la siguiente palabra obtenida despues del espacio en blanco
     }
+    if(!json){
+        for(int j=0;j<i;j++) printf("%s\n",palabras[j]);
+    }else{
+        cJSON *json = cJSON_CreateObject();
+        cJSON_AddStringToObject(json,"file","/proc/version");
+        cJSON *words = cJSON_CreateArray();
+        for(int j=0;j<i;j++){
+            cJSON *word = cJSON_CreateString(palabras[j]);
+            cJSON_AddItemToArray(words,word);
+        }
+        cJSON_AddItemToObject(json,"palabras",words);
+        char *string = cJSON_Print(json);
+        printf("%s\n",string);
+        cJSON_Delete(json);
+    }
     
-    for(int j=0;j<i;j++) printf("%s\n",palabras[j]);
+    
     fclose(file);
     free(palabras);
 }
