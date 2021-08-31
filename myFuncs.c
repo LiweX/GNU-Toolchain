@@ -1,10 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
-
-int validar_argumentos(char* argumentos){
-    return 1;
-}
 
 FILE* openFile(char* path){
     FILE *file;

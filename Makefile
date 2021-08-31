@@ -1,10 +1,14 @@
 CFLAGS=-Wall -Werror -pedantic
 
-lab3: lab3.o myStaticLib.a
-	gcc $(CFLAGS) -o lab3 lab3.o -L. myStaticLib.a
+lab3: lab3.o lib_static.a lib_dynamic.so
+	gcc $(CFLAGS) -o lab3 lab3.o -L. lib_static.a lib_dynamic.so
+	sudo cp lib_dynamic.so /usr/lib
 
-myStaticLib.a: myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
-	ar rcs myStaticLib.a myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
+lib_static.a: myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
+	ar rcs lib_static.a myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
+
+lib_dynamic.so: filesystems.o
+	gcc filesystems.o -shared -o lib_dynamic.so
 
 lab3.o: lab3.c
 	gcc $(CFLAGS) -c lab3.c
@@ -24,5 +28,9 @@ version.o: version.c version.h myFuncs.h
 cJSON.o: cJSON.c cJSON.h
 	gcc $(CFLAGS) -c cJSON.c
 
+filesystems.o: filesystems.c filesystems.h
+	gcc $(CFLAGS) -c filesystems.c 
+
 clean:
-	rm -f *.o lab3
+	rm -f *.o lab3 myStaticLib.a
+	sudo rm /usr/lib/lib_dynamic.so

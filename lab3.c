@@ -5,6 +5,7 @@
 #include "version.h"
 #include "cpuinfo.h"
 #include "meminfo.h"
+#include "filesystems.h"
 
 int main(int argc,char* argv[]){
 
@@ -40,6 +41,6 @@ int main(int argc,char* argv[]){
         cpuinfo(jFlag);
     }
     if(aFlag) version(jFlag);
-    if(dFlag) printf("cuestiones del punto 3");
+    if(dFlag) fileSystems();
     exit(EXIT_SUCCESS);
 }
