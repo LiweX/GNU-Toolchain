@@ -11,10 +11,11 @@ int main(int argc,char* argv[]){
         if(argc>2) jFlag=1;
         if(strstr(argv[1],"-s")){
             if(jFlag){
-                printf("Show punto 1.1 stuff on JSON format\n");
+                meminfo(1);
+                cpuinfo(1);
             }else{
-                meminfo();
-                cpuinfo();
+                meminfo(0);
+                cpuinfo(0);
             }
         }
 
