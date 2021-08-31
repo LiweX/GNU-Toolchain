@@ -49,9 +49,10 @@ void cpuinfo(int json){
         printf("Cantidad de cores: %d\n",cpuinfo.cores);
         printf("Cantidad de threads por core: %d\n",cpuinfo.threads);
     }else{
+        
         cJSON *json = cJSON_CreateObject();
         cJSON_AddStringToObject(json,"file","/proc/cpuinfo");
-        cJSON_AddStringToObject(json,"model",cpuinfo.model);
+        cJSON_AddStringToObject(json,"model",strtok((cpuinfo.model+2),"\n"));
         cJSON_AddNumberToObject(json,"cores",cpuinfo.cores);
         cJSON_AddNumberToObject(json,"threads per core",cpuinfo.threads);
         char *string = cJSON_Print(json);
