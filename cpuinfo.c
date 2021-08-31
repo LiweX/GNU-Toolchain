@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "myFuncs.h"
+#include "cJSON.h"
 
-void cpuinfo(void){
+void cpuinfo(int json){
 
     int modelFound=0,coresFound=0,siblingsFound=0;
 
@@ -43,10 +44,20 @@ void cpuinfo(void){
                break;
            }     
     }
-
-    printf("Modelo de CPU%s",cpuinfo.model);
-    printf("Cantidad de cores: %d\n",cpuinfo.cores);
-    printf("Cantidad de threads por core: %d\n",cpuinfo.threads);
+    if(!json){
+        printf("Modelo de CPU%s",cpuinfo.model);
+        printf("Cantidad de cores: %d\n",cpuinfo.cores);
+        printf("Cantidad de threads por core: %d\n",cpuinfo.threads);
+    }else{
+        cJSON *json = cJSON_CreateObject();
+        cJSON_AddStringToObject(json,"file","/proc/cpuinfo");
+        cJSON_AddStringToObject(json,"model",cpuinfo.model);
+        cJSON_AddNumberToObject(json,"cores",cpuinfo.cores);
+        cJSON_AddNumberToObject(json,"threads per core",cpuinfo.threads);
+        char *string = cJSON_Print(json);
+        printf("%s\n",string);
+        cJSON_Delete(json);
+    }
 
     fclose(file);
 }

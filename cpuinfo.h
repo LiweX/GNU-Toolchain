@@ -1,6 +1,6 @@
 #ifndef CPUINFO_H
 #define CPUINFO_H
 
-void cpuinfo(void);
+void cpuinfo(int json);
 
 #endif
