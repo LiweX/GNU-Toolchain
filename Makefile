@@ -32,5 +32,5 @@ filesystems.o: filesystems.c filesystems.h
 	gcc $(CFLAGS) -c filesystems.c 
 
 clean:
-	rm -f *.o lab3 myStaticLib.a
+	rm -f *.o lab3 lib_static.a lib_dynamic.so
 	sudo rm /usr/lib/lib_dynamic.so
