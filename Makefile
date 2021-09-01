@@ -2,13 +2,13 @@ CFLAGS=-Wall -Werror -pedantic
 
 lab3: lab3.o lib_static.a lib_dynamic.so
 	gcc $(CFLAGS) -o lab3 lab3.o -L. lib_static.a lib_dynamic.so
-	sudo cp lib_dynamic.so /usr/lib
 
 lib_static.a: myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
 	ar rcs lib_static.a myFuncs.o meminfo.o cpuinfo.o version.o cJSON.o
 
 lib_dynamic.so: filesystems.o
 	gcc filesystems.o -shared -o lib_dynamic.so
+	sudo cp lib_dynamic.so /usr/lib
 
 lab3.o: lab3.c
 	gcc $(CFLAGS) -c lab3.c
