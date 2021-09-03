@@ -26,7 +26,7 @@ version.o: version.c version.h myFuncs.h
 	gcc $(CFLAGS) -c version.c
 
 cJSON.o: cJSON.c cJSON.h
-	gcc $(CFLAGS) -c cJSON.c -fPIC
+	gcc $(CFLAGS) -c cJSON.c
 
 filesystems.o: filesystems.c filesystems.h 
 	gcc $(CFLAGS) -fPIC -c filesystems.c 

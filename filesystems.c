@@ -19,7 +19,7 @@ void fileSystems(void){
             token =strtok(NULL,"\n");
             cJSON_AddStringToObject(json,"filesystem",token);
         }else{
-            token =strtok(NULL,"\n");
+            token =strtok(token,"\n");
             cJSON_AddStringToObject(json,"filesystem",token);
         }
     }
