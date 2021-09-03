@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <dlfcn.h>
 #include "version.h"
 #include "cpuinfo.h"
 #include "meminfo.h"
-#include "filesystems.h"
 
 int main(int argc,char* argv[]){
 
@@ -41,6 +41,12 @@ int main(int argc,char* argv[]){
         cpuinfo(jFlag);
     }
     if(aFlag) version(jFlag);
-    if(dFlag) fileSystems();
+    if(dFlag){
+        void *libhandle = dlopen("lib_dynamic.so",RTLD_LAZY);
+        void (*func)(void); 
+        *(void **)(&func) = dlsym(libhandle,"fileSystems");
+        (*func)();
+        dlclose(libhandle);
+    }
     exit(EXIT_SUCCESS);
 }
