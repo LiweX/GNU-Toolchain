@@ -13,7 +13,7 @@ int main(int argc,char* argv[]){
     int jFlag=0;
     int sFlag=0;
     int aFlag=0;
-    int dFlag=0;
+    int dFlag=-1;
     if(argc<2) printf("Lista de argumentos validos:\n-s\n-a\n-s -j\n-a -j\n-d\n");
     while ((opt = getopt(argc,argv,"jsad")) != -1)
     {
